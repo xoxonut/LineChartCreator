@@ -5,104 +5,110 @@ import QtQuick.Controls 2.5
 import Creator 1.0
 Window {
     id: window
-    width: 640
-    height: 480
+    width: 700
+    height: 700
     visible: true
     title: qsTr("Hello World")
+    Button{
+        id: b
+        text: "show all"
+        onClicked: {
+            for(var i of Array(8).keys()){
+                chart.series(i).visible = true
+            }
+        }
+    }
 
     ChartView {
         id: chart
-        x: 160
-        y: 72
-        ValueAxis{
-            id: x
-            min: 0
-            max: 30
-        }
-        ValueAxis{
-            id: y
-            min: 0
-            max: 30
-        }
-
-        width:500
+        width: 500
         height: 500
-        LineSeries {
-            id: line1
-            name: "line1"
-            axisX:x
-            axisY:y
-        }
-        LineSeries {
-            id: line2
-            name: "line2"
-        }
-        LineSeries {
-            id: line3
-            name: "line3"
-        }
-        LineSeries {
-            id: line4
-            name: "line4"
-        }
-        LineSeries {
-            id: line5
-            name: "line5"
-        }
-        LineSeries {
-            id: line6
-            name: "line6"
-        }
-        LineSeries {
-            id: line7
-            name: "line7"
-        }
-        LineSeries {
-            id: line8
-            name: "line8"
-        }
+        anchors.fill: parent
+        anchors.rightMargin: 51
+        anchors.bottomMargin: 45
+        anchors.leftMargin: 187
+        anchors.topMargin: 66
+        axes: [
+            ValueAxis{
+                id: xAxis
+                min: 0
+                max: 30
+            },
+            ValueAxis{
+                id: yAxis
+                min:0
+                max: creator.maxY()
+            }
+        ]
     }
     Creator{
         id: creator
     }
-    Button{
-        id: botan
-        onClicked: {
-            for(var i = 0; i<line12.count; i++){
-                line12.at(i).visible = false
-                line.update()
-            }
+
+    Column {
+        x: 17
+        y: 102
+
+        Button {
+            id: button0
+            text: qsTr("line0")
+            onClicked: chart.series(0).visible = !chart.series(0).visible
         }
-    }
-    Component.onCompleted: {
-        var well = 1
-         console.log(chart.series.count)
-        for (var i = 0; i < chart.count; i++) {
-            creator.setSeries(chart.series(i),well)
-            well += 1
-//               for (var j=0; i<chart.series(j).count;j++){
-//                   console.log(chart.series((i).at(j)))
-//               }
+
+        Button {
+            id: button1
+            text: qsTr("line1")
+            onClicked: chart.series(1).visible = !chart.series(1).visible
         }
-        chart.update()
+
+        Button {
+            id: button2
+            text: qsTr("line2")
+            onClicked: chart.series(2).visible = !chart.series(2).visible
+        }
+
+        Button {
+            id: button3
+            text: qsTr("line3")
+            onClicked: chart.series(3).visible = !chart.series(3).visible
+        }
+
+        Button {
+            id: button4
+            text: qsTr("line4")
+            onClicked: chart.series(4).visible = !chart.series(4).visible
+        }
+
+        Button {
+            id: button5
+            text: qsTr("line5")
+            onClicked: chart.series(5).visible = !chart.series(5).visible
+        }
+
+        Button {
+            id: button6
+            text: qsTr("line6")
+            onClicked: chart.series(6).visible = !chart.series(6).visible
+        }
+
+        Button {
+            id: button7
+            text: qsTr("line7")
+            onClicked: chart.series(7).visible = !chart.series(7).visible
+        }
     }
 
-    Button {
-        id: button
-        x: 17
-        y: 36
-        text: qsTr("Button")
-        onClicked:{
-           var well = 1
-            console.log(chart.series.count)
-           for (var i = 0; i < chart.count; i++) {
-               creator.setSeries(chart.series(i),well)
-               well += 1
-//               for (var j=0; i<chart.series(j).count;j++){
-//                   console.log(chart.series((i).at(j)))
-//               }
-           }
-           chart.update()
+
+    Component.onCompleted: {
+        for(var i of Array(8).keys()){
+            var series = chart.createSeries(
+                        ChartView.SeriesTypeLine,
+                        i,
+                        xAxis,
+                        yAxis
+                        )
+            creator.setSeries(series,i)
+            chart.update()
         }
     }
 

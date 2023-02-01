@@ -3,6 +3,7 @@
 #include<QVariant>
 SQLloader::SQLloader()
 {
+    m_max=0;
     openDB();
     QSqlQuery query;
     for(auto i=0; i<9 ;i++){
@@ -14,6 +15,9 @@ SQLloader::SQLloader()
         for(auto i=0; i<9; i++){
             int tmp = query.value(i).toInt();
             container[i].push_back(tmp);
+            if(m_max<tmp){
+                m_max=tmp;
+            }
 
         }
     }
@@ -42,4 +46,7 @@ void SQLloader::loadData2List(QList<QList<qreal>> *list){
 }
 int SQLloader::wellLen(){
     return container[0].size();
+}
+int SQLloader::max(){
+    return m_max;
 }

@@ -10,10 +10,12 @@ public:
     void loadData2List(QList<QList<qreal>>*);
     QPointF getPoint(int,int);
     int wellLen();
+    int max();
 private:
     QSqlDatabase db;
     QList<QList<qreal>> container;
     void openDB();
+    int m_max;
 };
 
 #endif // SQLLOADER_H
