@@ -26,7 +26,7 @@ SQLloader::SQLloader()
 
 void SQLloader::openDB(){
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("/home/anderson/QtProjects/redenerPicture/example.db");
+    db.setDatabaseName("example.db");
     if(!db.open()){
         std::cerr<<"db open fail"<<std::endl;
     }else{
